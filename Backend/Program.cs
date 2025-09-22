@@ -26,9 +26,12 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.AllowAnyOrigin()
+         policy.WithOrigins("http://localhost:3000", "https://todolist-client-2yig.onrender.com")
               .AllowAnyHeader()
               .AllowAnyMethod();
+        // policy.AllowAnyOrigin()
+        //       .AllowAnyHeader()
+        //       .AllowAnyMethod();
     });
 });
 
