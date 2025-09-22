@@ -15,10 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenLocalhost(5101); // HTTP
-    options.ListenLocalhost(7097, listenOptions =>
-    {
-        listenOptions.UseHttps();  // HTTPS
-    });
+    // options.ListenLocalhost(7097, listenOptions =>
+    // {
+    //     listenOptions.UseHttps();  // HTTPS
+    // });
 });
 
 // CORS - פתיחת הרשאות כללית
@@ -90,7 +90,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 // Endpoints
 app.MapGet("/", () => " ברוכה הבאה");
