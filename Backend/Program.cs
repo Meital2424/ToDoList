@@ -1,72 +1,3 @@
-// using Microsoft.EntityFrameworkCore;
-// using TodoApi.Data;
-// using TodoApi.Models;
-
-// var builder = WebApplication.CreateBuilder(args);
-
-// // הוספת MySQL מתוך `appsettings.json`
-// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// builder.Services.AddDbContext<TaskDbContext>(options =>
-//     options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 36)))); // יש לעדכן לגרסה שלך
-
-// var app = builder.Build();
-
-// // שליפת כל המשימות
-// app.MapGet("/tasks", async (TaskDbContext db) =>
-//     await db.Tasks.ToListAsync());
-
-// // הוספת משימה חדשה
-// app.MapPost("/tasks", async (TaskDbContext db, TaskItem task) =>
-// {
-//     db.Tasks.Add(task);
-//     await db.SaveChangesAsync();
-//     return Results.Created($"/tasks/{task.Id}", task);
-// });
-
-// // עדכון משימה קיימת
-// app.MapPut("/tasks/{id}", async (TaskDbContext db, int id, TaskItem updatedTask) =>
-// {
-//     var task = await db.Tasks.FindAsync(id);
-//     if (task == null) return Results.NotFound();
-
-//     task.Name = updatedTask.Name;
-//     task.IsCompleted = updatedTask.IsCompleted;
-
-//     await db.SaveChangesAsync();
-//     return Results.NoContent();
-// });
-
-// // מחיקת משימה
-// app.MapDelete("/tasks/{id}", async (TaskDbContext db, int id) =>
-// {
-//     var task = await db.Tasks.FindAsync(id);
-//     if (task == null) return Results.NotFound();
-
-//     db.Tasks.Remove(task);
-//     await db.SaveChangesAsync();
-//     return Results.NoContent();
-// });
-
-// app.Run();
-
-// -------------------------------------------------------------------------
-// הקוד לא עובד תקין, הגעתי לחלק של הגדרת הניתובים וזה לא שולח בקשות בצורה תקינה, לא יודעת מה הסיבה
-
-// using Microsoft.AspNetCore.Mvc;
-
-// var builder = WebApplication.CreateBuilder(args);
-
-// // Added as service
-// builder.Services.AddSingleton<Service>();
-
-// var app = builder.Build();
-
-// app.MapGet("/{id}", (int id,
-//                      [FromHeader(Name = "X-CUSTOM-HEADER")] string customHeader,
-//                      Service service) => { });
-
-// class Service { }
-
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Data;
 using TodoApi.Models;
@@ -164,22 +95,8 @@ app.UseHttpsRedirection();
 // Endpoints
 app.MapGet("/", () => " ברוכה הבאה");
 
-// app.MapGet("/tasks", async (ToDoDbContext db) =>
-//     await db.Tasks.ToListAsync());
-
 app.MapGet("/tasks", async ([FromServices] ToDoDbContext db) =>
     await db.Items.ToListAsync());
-
-
-// app.MapPost("/tasks", async (ToDoDbContext db, TaskItem? task) =>
-// {
-//     if (task == null || string.IsNullOrWhiteSpace(task.Name))
-//         return Results.BadRequest("Task name cannot be empty.");
-
-//     db.Tasks.Add(task);
-//     await db.SaveChangesAsync();
-//     return Results.Created($"/tasks/{task.Id}", task);
-// });
 
 app.MapPost("/tasks", async ([FromServices] ToDoDbContext db, [FromBody] Item? item) =>
 {
@@ -190,23 +107,6 @@ app.MapPost("/tasks", async ([FromServices] ToDoDbContext db, [FromBody] Item? i
     await db.SaveChangesAsync();
     return Results.Created($"/tasks/{item.Id}", item);
 });
-
-
-// app.MapPut("/tasks/{id}", async (ToDoDbContext db, int id, TaskItem? updatedTask) =>
-// {
-//     if (updatedTask == null || string.IsNullOrWhiteSpace(updatedTask.Name))
-//         return Results.BadRequest("Task name cannot be empty.");
-
-//     var task = await db.Tasks.FindAsync(id);
-//     if (task == null) return Results.NotFound();
-
-//     task.Name = updatedTask.Name;
-//     task.IsCompleted = updatedTask.IsCompleted;
-
-//     await db.SaveChangesAsync();
-//     return Results.NoContent();
-// });
-
 
 app.MapPut("/tasks/{id}", async ([FromServices] ToDoDbContext db, int id, [FromBody] Item? updatedItem) =>
 {
@@ -222,17 +122,6 @@ app.MapPut("/tasks/{id}", async ([FromServices] ToDoDbContext db, int id, [FromB
     await db.SaveChangesAsync();
     return Results.NoContent();
 });
-
-
-// app.MapDelete("/tasks/{id}", async (ToDoDbContext db, int id) =>
-// {
-//     var task = await db.Tasks.FindAsync(id);
-//     if (task == null) return Results.NotFound();
-
-//     db.Tasks.Remove(task);
-//     await db.SaveChangesAsync();
-//     return Results.NoContent();
-// });
 
 app.MapDelete("/tasks/{id}", async ([FromServices] ToDoDbContext db, int id) =>
 {
