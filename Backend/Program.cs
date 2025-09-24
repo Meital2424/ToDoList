@@ -14,7 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 // מאזינים מפורשים ל HTTP ו HTTPS
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenLocalhost(5101); // HTTP
+    // options.ListenLocalhost(5101); // HTTP
+    options.ListenAnyIP(5101);
     // options.ListenLocalhost(7097, listenOptions =>
     // {
     //     listenOptions.UseHttps();  // HTTPS
