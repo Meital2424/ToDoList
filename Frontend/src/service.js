@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // הגדרת ברירת מחדל של כתובת הבסיס (Config Defaults)
-axios.defaults.baseURL = 'http://localhost:5101'; // שימי לב - צריך לוודא שזה הפורט שבו רץ ה-API שלך
+// axios.defaults.baseURL = 'http://localhost:5101'; 
+axios.defaults.baseURL = 'https://todolist-server-nt7j.onrender.com'; 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // Interceptor לשגיאות
