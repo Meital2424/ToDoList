@@ -79,7 +79,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ToDoDbContext>();
     context.Database.CanConnect();
-    ontext.Database.Migrate(); 
+    context.Database.Migrate(); 
 }
 
 
