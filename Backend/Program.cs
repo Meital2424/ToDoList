@@ -79,10 +79,11 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ToDoDbContext>();
     context.Database.CanConnect();
+    ontext.Database.Migrate(); 
 }
 
 
-app.UseCors();
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -95,6 +96,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection();
+app.UseCors();
 
 // Endpoints
 app.MapGet("/", () => " ברוכה הבאה");
